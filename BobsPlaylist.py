@@ -34,11 +34,16 @@ creds = SpotifyOAuth(client_id=CLIENT_ID,
                      scope="playlist-modify-public",
                      open_browser=False)
 spotify = Spotify(auth_manager=creds)
+
+# Initialize .songs.tmp file for song history
 with open(".songs.tmp", "w") as f:
     f.write("Processed URIs:\n")
 
 
 def check_song_exists(new_uri: str) -> bool:
+    """
+    Checks if a song has already been added to this playlist by this script.
+    """
     with open(".songs.tmp", "r") as songs_f:
         for uri in songs_f:
             if (uri == new_uri):
@@ -47,6 +52,9 @@ def check_song_exists(new_uri: str) -> bool:
 
 
 def get_song_info(driver: webdriver, page_url: str) -> (str, str):
+    """
+    Loads 1029bobfm.com and gets the artist and title of the most recently played song.
+    """
     driver.get(page_url)
     song_info = driver.find_element(By.CLASS_NAME, "song").find_element(By.CLASS_NAME, "info")
     artist = song_info.find_element(By.CLASS_NAME, "artist").text
@@ -59,6 +67,9 @@ def get_song_info(driver: webdriver, page_url: str) -> (str, str):
 
 
 def spotify_search(api: Spotify, query_text: str) -> str:
+    """
+    Searches spotify for information about a song.
+    """
     search_result = api.search(query_text, limit=1)["tracks"]
 
     if (int(search_result["total"]) == 0):
@@ -68,6 +79,9 @@ def spotify_search(api: Spotify, query_text: str) -> str:
 
 
 def add_to_playlist(api: Spotify, playlist_url: str, song_uri: str) -> None:
+    """
+    Adds a song to a playlist, playlist MUST be public
+    """
     with open(".songs.tmp", "a") as songs_f:
         songs_f.write(f"{song_uri}\n")
 
