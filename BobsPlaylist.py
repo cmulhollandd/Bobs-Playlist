@@ -46,7 +46,7 @@ def check_song_exists(new_uri: str) -> bool:
     """
     with open(".songs.tmp", "r") as songs_f:
         for uri in songs_f:
-            if (uri == new_uri):
+            if (uri == f"{new_uri}\n"):
                 return True
     return False
 
