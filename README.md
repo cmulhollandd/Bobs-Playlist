@@ -4,9 +4,10 @@
 ### Setup
 1. All dependencies can be installed by running ```pip install requirements.txt```
 	* Or, alternatively, these can be installed manually through a different package manager
-2. If this is the first time using selenium, you will need to also install geckodriver for firefox.
+2. If this is the first time using selenium, you will need to also install chromedriver for Google Chrome.
+    * This script uses the chrome driver because it can be run in a headless mode for use over ssh..
 	* More instructions on this set are available [here](https://selenium-python.readthedocs.io/installation.html#drivers)
-	* Whichever geckodriver you download, needs to be placed in your environment's `PATH` (either `/usr/bin/` or `/usr/local/bin/` on UNIX systems)
+	* Whichever driver you download, needs to be placed in your environment's `PATH` (either `/usr/bin/` or `/usr/local/bin/` on UNIX systems)
 3. Environment Variables
 	* This script makes use of different environment variables for spotify access keys and playlist urls, namely:
 		* `SPOTIPY_CLIENT_ID`: client id key provided by spotify
@@ -30,7 +31,7 @@
 
 
 ### Known Issues:
-* Authentication if finicky
+* Authentication is finicky
 	* if you are getting the error `400 Client Error: Bad Request for url: https://accounts.spotify.com/api/token` try deleteing `.cache` in this directory.
 * This script keeps track of the songs it adds to the playlist and will not add duplicates __however__ it does not check through spotify if a song is already present so duplicates may be added that way. 
 	* Along the same lines: it may add duplicates of a song if they are different versions (remastered, live, radio edit, etc).
