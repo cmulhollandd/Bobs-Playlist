@@ -1,0 +1,4 @@
+requests
+spotipy
+selenium
+pyvirtualdisplay
