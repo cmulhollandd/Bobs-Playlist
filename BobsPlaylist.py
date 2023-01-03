@@ -35,7 +35,7 @@ creds = SpotifyOAuth(client_id=CLIENT_ID,
                      open_browser=False)
 spotify = Spotify(auth_manager=creds)
 with open(".songs.tmp", "w") as f:
-    f.write("Processed URIs:")
+    f.write("Processed URIs:\n")
 
 
 def check_song_exists(new_uri: str) -> bool:
@@ -69,7 +69,7 @@ def spotify_search(api: Spotify, query_text: str) -> str:
 
 def add_to_playlist(api: Spotify, playlist_url: str, song_uri: str) -> None:
     with open(".songs.tmp", "a") as songs_f:
-        songs_f.write(song_uri)
+        songs_f.write(f"{song_uri}\n")
 
     api.playlist_add_items(playlist_url, [song_uri])
 
